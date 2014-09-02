@@ -3,6 +3,7 @@
 $loader = require __DIR__ . "/vendor/autoload.php";
 
 use Leaphly\Price\Price;
+use Leaphly\Price\Builder\PriceBuilder;
 use Leaphly\Price\Infrastructure\PricePresentation;
 
 $price1 = new Price(
@@ -11,10 +12,11 @@ $price1 = new Price(
 
 $price1 = $price1->multiply(10);
 
-$price2 = new Price(
-    ['EUR'=>100],
-    ['EUR/GBP 1.100']
-);
+$priceBuilder = new PriceBuilder();
+$price2 = $priceBuilder
+    ->addValue('EUR', 100)
+    ->addConversion('EUR/GBP 1.100')
+    ->build();
 
 $priceSum = $price1->add($price2);
 
